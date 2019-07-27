@@ -494,6 +494,7 @@ def concate_filepath(filepath, csvfile):
     file = csvfile + '.csv'
     filepath = concate_file(filepath)
     fullpath = os.path.join(filepath, file)
+    fullpath = '\\'.join(os.path.dirname(fullpath).split("/"))
     return fullpath
 
 
