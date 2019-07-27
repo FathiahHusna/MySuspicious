@@ -487,6 +487,7 @@ def concate_filepath(filepath, csvfile):
     file = csvfile + '.csv'
     #filepath = '/'.join(filepath.split("\\"))
     fullpath = os.path.join(filepath, file)
+    fullpath = '\\'.join(filepath.split("/"))
     return fullpath
 
 def scrap(mycar, mylocation, mypage, filepath):
