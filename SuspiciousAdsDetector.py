@@ -485,8 +485,8 @@ def location_format(input_value):
 
 def concate_filepath(filepath, csvfile):
     file = csvfile + '.csv'
+    filepath = '/'.join(filepath.split("\\"))
     fullpath = os.path.join(filepath, file)
-    fullpath = '\\'.join(fullpath.split("/"))
     return fullpath
 
 def scrap(mycar, mylocation, mypage, filepath):
