@@ -498,9 +498,10 @@ def concate_filepath(filepath, csvfile):
     return fullpath
 
 
-def scrap(mycar, mylocation, mypage, filepath):
-    
-    filename = filepath
+#def scrap(mycar, mylocation, mypage, filepath):
+    #filename = filepath
+def scrap(mycar, mylocation, mypage, fpath, fname):
+    filename = fpath, fname
     def subs (Mileage):
         if Mileage == "0 - 4 999":
             return Mileage.replace("0 - 4 999", "2500", 1)
@@ -652,7 +653,8 @@ def scrap(mycar, mylocation, mypage, filepath):
         df = pd.DataFrame(container, columns = ['Name', 'Price', 'Manufactured Year', 'Mileage', 'NewMil', 'CC', 'Condition', 'Link'])
         #df.to_csv(filename, index=False, encoding='utf-8')
         try:
-            df.to_csv(filename, index=False, encoding='utf-8')
+            #df.to_csv(filename, index=False, encoding='utf-8')
+            df.to_csv(fpath / fname, index=False, encoding='utf-8')
         except IOError as e:
             print ("Error in saving", filename)
             print (e)
@@ -715,7 +717,8 @@ def test_output_div4(car, location, page, fpath, fname, n_clicks):
         elif len(fname)<6:
             return textwrap.dedent('''Please fill in csv file name to 6 char''')
         else:
-            return '''{}'''.format(scrap(car, location, page, concate_filepath(fpath,fname)))
+            #return '''{}'''.format(scrap(car, location, page, concate_filepath(fpath,fname)))
+            return '''{}'''.format(scrap(car, location, page, fpath,fname))
             #return 'Location File: {}'.format(concate_filepath(fpath, fname)) + ' len fpath:' , len(fpath) , ' len fname:' , len(fname)
 
 
