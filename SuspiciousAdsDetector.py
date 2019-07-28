@@ -499,8 +499,8 @@ def concate_filepath(filepath, csvfile):
 
 
 def scrap(mycar, mylocation, mypage, filepath):
-    #filename = filepath
-    filename = filepath + '.csv'
+    filename = filepath
+    #filename = filepath + '.csv'
     def subs (Mileage):
         if Mileage == "0 - 4 999":
             return Mileage.replace("0 - 4 999", "2500", 1)
@@ -703,11 +703,11 @@ def test_output_div3(input_value):
 
 @app.callback(
     Output(component_id='markdown_scrap', component_property = 'children'),
-    [Input(component_id = 'car', component_property = 'value'), Input(component_id = 'location', component_property = 'value'), Input(component_id = 'page', component_property = 'value'), Input(component_id = 'fpath', component_property = 'value'), #Input(component_id = 'fname', component_property = 'value'), 
+    [Input(component_id = 'car', component_property = 'value'), Input(component_id = 'location', component_property = 'value'), Input(component_id = 'page', component_property = 'value'), Input(component_id = 'fpath', component_property = 'value'), Input(component_id = 'fname', component_property = 'value'), 
      Input(component_id = 'scrap', component_property = 'n_clicks')]
 )
 
-def test_output_div4(car, location, page, fpath, n_clicks):
+def test_output_div4(car, location, page, fpath, fname, n_clicks):
     if n_clicks==0:
         return textwrap.dedent('''Click the button to scrap''')
     elif n_clicks>0:
@@ -716,8 +716,8 @@ def test_output_div4(car, location, page, fpath, n_clicks):
         elif len(fname)<6:
             return textwrap.dedent('''Please fill in csv file name to 6 char''')
         else:
-            #return '''{}'''.format(scrap(car, location, page, concate_filepath(fpath,fname)))
-            return '''{}'''.format(scrap(car, location, page, fpath))
+            return '''{}'''.format(scrap(car, location, page, concate_filepath(fpath,fname)))
+            #return '''{}'''.format(scrap(car, location, page, fpath))
             #return 'Location File: {}'.format(concate_filepath(fpath, fname)) + ' len fpath:' , len(fpath) , ' len fname:' , len(fname)
 
 
