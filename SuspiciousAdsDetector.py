@@ -175,29 +175,39 @@ type_pages = html.P([
                                     'padding-left' : '20px',
                                     'display': 'inline-grid'})
 
-folder_path = dcc.Input(
-    placeholder='Enter Folder Path',
+#folder_path = dcc.Input(
+#    placeholder='Enter Folder Path',
+#    type='text',
+#    value='', 
+#    id = 'fpath',
+#    style={'background': 'AliceBlue'}
+#)
+
+#folder_name = dcc.Input(
+#    placeholder='Enter CSV name (without .csv, up to 6 char)',
+#    type='text',
+#    value='', 
+#    id = 'fname', 
+#    maxLength=6,
+#    style={'background': 'AliceBlue'}
+#)
+
+single_folder = dcc.Input(
+    placeholder='Enter folder path and plus "\" with CSV name (without .csv)',
     type='text',
     value='', 
-    id = 'fpath',
-    style={'background': 'AliceBlue'}
+    id = 'fsingle', 
+    style={'background': 'AliceBlue'},
+    n_submit=0,
+    n_blur=0
 )
-
-folder_name = dcc.Input(
-    placeholder='Enter CSV name (without .csv, up to 6 char)',
-    type='text',
-    value='', 
-    id = 'fname', 
-    maxLength=6,
-    style={'background': 'AliceBlue'}
-)
-
+    
 save_btn = html.Button('Scrap & Save', id='scrap', n_clicks=0,  
                        style={'background': 'DodgerBlue', 'font-weight': 'bold', 'color': 'WhiteSmoke', 'fontSize' : '15px'}
                       )
                                         
 
-type_save = html.P([folder_path, folder_name,
+type_save = html.P([single_folder,
                     save_btn
                         ], style = {'width': '400px',
                                     'fontSize' : '15px',
@@ -499,8 +509,8 @@ def concate_filepath(filepath, csvfile):
 
 
 def scrap(mycar, mylocation, mypage, filepath):
-    filename = filepath
-    #filename = filepath + '.csv'
+    #filename = filepath #two textboxes
+    filename = filepath + '.csv' #single textbox
     def subs (Mileage):
         if Mileage == "0 - 4 999":
             return Mileage.replace("0 - 4 999", "2500", 1)
@@ -657,19 +667,20 @@ def scrap(mycar, mylocation, mypage, filepath):
             print ("Error in saving", filename)
             print (e)
             #return "Error in saving " , filename , e
-            err_str1 = "Error in saving " + filename + "\n" + str(e)
+            ##err_str1 = "Error in saving " + filename + "\n" + str(e)
+            err_str1 = '''__Error in saving__ ''' + filename + '\n' + str(e)
             return err_str1
             df = pd.DataFrame()
         else:
             print("Done scrap " + filename)
             return "Done scrap " + filename
-        #print (df)
-        #print("Done scrap " + filename)
         
         
     else:
         print('Unable to scrap, the chosen number of pages (', n,  ') exceeded the maximum page(s) available which is' , max_pg)
-        return 'Unable to scrap, the chosen number of pages (' + str(n) +  ') exceeded the maximum page(s) available which is ' + str(max_pg)
+        str_max_pg = '''__Unable to scrap, the chosen number of pages (__ ''' + '''__''' + str(n) + '''__''' + ''' __) exceeded the maximum page(s) available which is__ ''' + '''__''' + str(max_pg) + '''__'''
+        #return 'Unable to scrap, the chosen number of pages (' + str(n) +  ') exceeded the maximum page(s) available which is ' + str(max_pg)
+        return textwrap.dedent(str_max_pg)
         pass
 
 
@@ -701,26 +712,44 @@ def test_output_div3(input_value):
     #input_value = car_format(input_value)
     return 'My Page Numbers: {}'.format(input_value)
 
+#@app.callback(
+#    Output(component_id='markdown_scrap', component_property = 'children'),
+#    [Input(component_id = 'car', component_property = 'value'), Input(component_id = 'location', component_property = 'value'), Input(component_id = 'page', component_property = 'value'), Input(component_id = 'fpath', component_property = 'value'), Input(component_id = 'fname', component_property = 'value'), 
+ #    Input(component_id = 'scrap', component_property = 'n_clicks')]
+#)
+
+#def test_output_div4(car, location, page, fpath, fname, n_clicks):
+#    if n_clicks==0:
+#        return textwrap.dedent('''Click the button to scrap''')
+#    elif n_clicks>0:
+#        if len(fpath)==0 or len(fname)==0:
+#            return textwrap.dedent('''Please fill in folder path and csv file name''')
+#        elif len(fname)<6:
+#            return textwrap.dedent('''Please fill in csv file name to 6 char''')
+#        else:
+#            return '''{}'''.format(scrap(car, location, page, concate_filepath(fpath,fname)))
+            #return 'Location File: {}'.format(concate_filepath(fpath, fname)) + ' len fpath:' , len(fpath) , ' len fname:' , len(fname)
+
 @app.callback(
     Output(component_id='markdown_scrap', component_property = 'children'),
-    [Input(component_id = 'car', component_property = 'value'), Input(component_id = 'location', component_property = 'value'), Input(component_id = 'page', component_property = 'value'), Input(component_id = 'fpath', component_property = 'value'), Input(component_id = 'fname', component_property = 'value'), 
+    [Input(component_id = 'car', component_property = 'value'), Input(component_id = 'location', component_property = 'value'), Input(component_id = 'page', component_property = 'value'), Input(component_id = 'fsingle', component_property = 'value'),
+     Input(component_id = 'fsingle', component_property = 'n_submit'),
+     #Input(component_id = 'fsingle', component_property = 'n_blur'),
      Input(component_id = 'scrap', component_property = 'n_clicks')]
 )
 
-def test_output_div4(car, location, page, fpath, fname, n_clicks):
+def test_output_div4(car, location, page, fsingle, n_submit, n_clicks):
     if n_clicks==0:
         return textwrap.dedent('''Click the button to scrap''')
-    elif n_clicks>0:
-        if len(fpath)==0 or len(fname)==0:
-            return textwrap.dedent('''Please fill in folder path and csv file name''')
-        elif len(fname)<6:
-            return textwrap.dedent('''Please fill in csv file name to 6 char''')
-        else:
-            return '''{}'''.format(scrap(car, location, page, concate_filepath(fpath,fname)))
-            #return '''{}'''.format(scrap(car, location, page, fpath))
-            #return 'Location File: {}'.format(concate_filepath(fpath, fname)) + ' len fpath:' , len(fpath) , ' len fname:' , len(fname)
-
-
+    elif n_clicks==1:
+        if len(fsingle)==0:
+            return textwrap.dedent('''__Please fill in folder path and csv file name__''')
+        elif n_submit==1:
+            return '''{}'''.format(scrap(car, location, page, fsingle))
+    else:
+        return '''__Please refresh the page to proceed the next scraping__'''
+ 
+        
 def parse_contents(contents, filename, date):
     content_type, content_string = contents.split(',')
 
