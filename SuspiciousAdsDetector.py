@@ -663,7 +663,8 @@ def scrap(mycar, mylocation, mypage, filepath):
         #df.to_csv(filename, index=False, encoding='utf-8')
         try:
             df.to_csv(filename, index=False, encoding='utf-8')
-        except IOError as e:
+        #except IOError as e:
+        except Exception as e:
             print ("Error in saving", filename)
             print (e)
             #return "Error in saving " , filename , e
