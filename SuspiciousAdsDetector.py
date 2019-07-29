@@ -665,7 +665,7 @@ def scrap(mycar, mylocation, mypage, filepath):
             #new_filepath = filepath.rsplit('\\', 1)[0]
             #os.chdir(new_filepath)
             df.to_csv(filename, index=False, encoding='utf-8')
-            return textwrap.dedent('''Saving to dataframe..''')
+            print('Saving to dataframe')
         except IOError as e:
         #except Exception as e:
             print ("Error in saving", filename)
