@@ -193,7 +193,7 @@ type_pages = html.P([
 #)
 
 single_folder = dcc.Input(
-    placeholder='Enter folder path and plus "\" with CSV name (without .csv)',
+    placeholder='Enter folder path and plus "\\" with CSV name (without .csv)',
     type='text',
     value='', 
     id = 'fsingle', 
