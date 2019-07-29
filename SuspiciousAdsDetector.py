@@ -662,8 +662,8 @@ def scrap(mycar, mylocation, mypage, filepath):
         df = pd.DataFrame(container, columns = ['Name', 'Price', 'Manufactured Year', 'Mileage', 'NewMil', 'CC', 'Condition', 'Link'])
         #df.to_csv(filename, index=False, encoding='utf-8')
         try:
-            new_filepath = filepath.rsplit('\\', 1)[0]
-            os.chdir(new_filepath)
+            #new_filepath = filepath.rsplit('\\', 1)[0]
+            #os.chdir(new_filepath)
             df.to_csv(filename, index=False, encoding='utf-8')
         except IOError as e:
         #except Exception as e:
