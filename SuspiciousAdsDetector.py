@@ -220,7 +220,8 @@ download_btn = html.A(
         id='download-link',
         download="scraped_dataset.csv",
         href="",
-        target="_blank"
+        target="_blank",
+        style = {'padding-left' : '20px'}
 )
 
 test_output_car = html.Div(id='car-div')
