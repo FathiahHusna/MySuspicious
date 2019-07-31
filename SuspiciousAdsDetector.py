@@ -21,6 +21,7 @@ import plotly.graph_objs as go
 import requests as req
 #import bs4
 #calling package URL lib
+import urllib
 from urllib.request import urlopen as uReq
 #pase HTML text
 from bs4 import BeautifulSoup as soup
@@ -214,6 +215,13 @@ type_save = html.P([single_folder,
                                     'padding-left' : '20px',
                                     'display': 'grid'})
 
+download_btn = html.A(
+    'Download Scraped Data',
+        id='download-link',
+        download="scraped_dataset.csv",
+        href="",
+        target="_blank"
+)
 
 test_output_car = html.Div(id='car-div')
 
@@ -455,7 +463,8 @@ app.layout = html.Div([header_img,  about_text, car_img, description_text,
     dcc.Tabs(id="tabs", children=[
         dcc.Tab(label='Extraction Data', children=[
             html.Div([
-                type_car, type_location, type_pages, type_save, output_car, output_location, output_page, str_scrap
+                type_car, type_location, type_pages, #type_save, 
+                output_car, output_location, output_page, str_scrap, download_btn
             ])
         ], style=tab_style),
         dcc.Tab(label='Upload & View', children=[
@@ -508,9 +517,10 @@ def concate_filepath(filepath, csvfile):
     return fullpath
 
 
-def scrap(mycar, mylocation, mypage, filepath):
+#def scrap(mycar, mylocation, mypage, filepath):
     #filename = filepath #two textboxes
-    filename = filepath + '.csv' #single textbox
+    #filename = filepath + '.csv' #single textbox
+def scrap(mycar, mylocation, mypage):
     def subs (Mileage):
         if Mileage == "0 - 4 999":
             return Mileage.replace("0 - 4 999", "2500", 1)
@@ -660,31 +670,35 @@ def scrap(mycar, mylocation, mypage, filepath):
 
 
         df = pd.DataFrame(container, columns = ['Name', 'Price', 'Manufactured Year', 'Mileage', 'NewMil', 'CC', 'Condition', 'Link'])
+        return df, textwrap.dedent('''''')
         #df.to_csv(filename, index=False, encoding='utf-8')
-        try:
+        #hide semua try and exception utk download button 
+        #try:
             #new_filepath = filepath.rsplit('\\', 1)[0]
             #os.chdir(new_filepath)
-            df.to_csv(filename, index=False, encoding='utf-8')
-            print('Saving to dataframe')
-        except IOError as e:
+            #df.to_csv(filename, index=False, encoding='utf-8')
+            #print('Saving to dataframe')
+        #except IOError as e:
         #except Exception as e:
-            print ("Error in saving", filename)
-            print (e)
+            #print ("Error in saving", filename)
+            #print (e)
             #return "Error in saving " , filename , e
             ##err_str1 = "Error in saving " + filename + "\n" + str(e)
-            err_str1 = '''__Error in saving__ ''' + filename + '\n' + str(e)
-            return err_str1
-            df = pd.DataFrame()
-        else:
-            print("Done scrap " + filename)
-            return "Done scrap " + filename
+            #err_str1 = '''__Error in saving__ ''' + filename + '\n' + str(e)
+            #return err_str1
+            #df = pd.DataFrame()
+        #else:
+            #print("Done scrap " + filename)
+            #return "Done scrap " + filename
         
         
     else:
         print('Unable to scrap, the chosen number of pages (', n,  ') exceeded the maximum page(s) available which is' , max_pg)
         str_max_pg = '''__Unable to scrap, the chosen number of pages (__ ''' + '''__''' + str(n) + '''__''' + ''' __) exceeded the maximum page(s) available which is__ ''' + '''__''' + str(max_pg) + '''__'''
         #return 'Unable to scrap, the chosen number of pages (' + str(n) +  ') exceeded the maximum page(s) available which is ' + str(max_pg)
-        return textwrap.dedent(str_max_pg)
+        #return textwrap.dedent(str_max_pg)
+        df = pd.DataFrame()
+        return df, textwrap.dedent(str_max_pg)
         pass
 
 
@@ -734,26 +748,35 @@ def test_output_div3(input_value):
 #            return '''{}'''.format(scrap(car, location, page, concate_filepath(fpath,fname)))
             #return 'Location File: {}'.format(concate_filepath(fpath, fname)) + ' len fpath:' , len(fpath) , ' len fname:' , len(fname)
 
-@app.callback(
-    Output(component_id='markdown_scrap', component_property = 'children'),
-    [Input(component_id = 'car', component_property = 'value'), Input(component_id = 'location', component_property = 'value'), Input(component_id = 'page', component_property = 'value'), Input(component_id = 'fsingle', component_property = 'value'),
-     Input(component_id = 'fsingle', component_property = 'n_submit'),
-     #Input(component_id = 'fsingle', component_property = 'n_blur'),
-     Input(component_id = 'scrap', component_property = 'n_clicks')]
-)
+#@app.callback(
+ #   Output(component_id='markdown_scrap', component_property = 'children'),
+  #  [Input(component_id = 'car', component_property = 'value'), Input(component_id = 'location', component_property = 'value'), Input(component_id = 'page', component_property = 'value'), Input(component_id = 'fsingle', component_property = 'value'),
+   #  Input(component_id = 'fsingle', component_property = 'n_submit'),
+    # Input(component_id = 'fsingle', component_property = 'n_blur'),
+     #Input(component_id = 'scrap', component_property = 'n_clicks')])
 
-def test_output_div4(car, location, page, fsingle, n_submit, n_clicks):
-    if n_clicks==0:
-        return textwrap.dedent('''Click the button to scrap''')
-    elif n_clicks==1:
-        if len(fsingle)==0:
-            return textwrap.dedent('''__Please fill in folder path and csv file name__''')
-        elif n_submit==1:
-            return '''{}'''.format(scrap(car, location, page, fsingle))
-    else:
-        return '''__Please refresh the page to proceed the next scraping__'''
- 
-        
+#def test_output_div4(car, location, page, fsingle, n_submit, n_clicks):
+ #   if n_clicks==0:
+  #      return textwrap.dedent('''Click the button to scrap''')
+   # elif n_clicks==1:
+    #    if len(fsingle)==0:
+     #       return textwrap.dedent('''__Please fill in folder path and csv file name__''')
+      #  elif n_submit==1:
+       #     return '''{}'''.format(scrap(car, location, page, fsingle))
+    #else:
+        #return '''__Please refresh the page to proceed the next scraping__'''
+
+@app.callback(
+   [Output('download-link', 'href'), Output(component_id='markdown_scrap', component_property = 'children')],
+    [Input(component_id = 'car', component_property = 'value'), Input(component_id = 'location', component_property = 'value'), Input(component_id = 'page', component_property = 'value')])
+
+def update_download_link(car, location, page):
+    dff, scrap_str = scrap(car, location, page)
+    csv_string = dff.to_csv(index=False, encoding='utf-8')
+    csv_string = "data:text/csv;charset=utf-8," + urllib.parse.quote(csv_string)
+    return csv_string, scrap_str
+
+
 def parse_contents(contents, filename, date):
     content_type, content_string = contents.split(',')
 
