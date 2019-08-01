@@ -8,4 +8,5 @@ Dash Documentation: https://dash.plot.ly/
 
 Deployment: 
 https://dash.plot.ly/deployment (Heroku Example)
+
 https://www.youtube.com/watch?v=skc-ZEU9kO8
