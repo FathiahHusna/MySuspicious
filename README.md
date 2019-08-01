@@ -10,4 +10,4 @@ Deployment:
 
 https://dash.plot.ly/deployment (Heroku Example)
 
-https://www.youtube.com/watch?v=skc-ZEU9kO8
+https://www.youtube.com/watch?v=skc-ZEU9kO8 (Deploying Flask/Dash Apps Using Heroku)
