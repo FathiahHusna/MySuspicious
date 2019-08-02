@@ -93,7 +93,7 @@ trademark = html.Div(children='Beware of SCAMMER, Buy from the Trusted ONE', sty
 })
 
 markdown_text = ''' 
-__NAME__ : FATHIAH HUSNA BINTI FIRDAUS || __SUPERVISOR__ : DR. ALI SEMAN || July 2019
+__NAME__ : FATHIAH HUSNA BINTI FIRDAUS || __SUPERVISOR__ : DR. ALI SEMAN || July 2019 ||  [Video Tutorial](https://www.youtube.com/watch?v=zS2Xq7Mhyh8&feature=youtu.be)
 '''
 
 about_text = html.Div([dcc.Markdown(children=markdown_text, style = {
