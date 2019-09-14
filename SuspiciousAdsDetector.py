@@ -53,34 +53,19 @@ image_filename2 = 'Suspicous Ads.png' # replace with your own image
 encoded_image2 = base64.b64encode(open(image_filename2, 'rb').read())
 title_img = html.Img(src='data:image/png;base64,{}'.format(encoded_image2.decode()))
 
-#title_img = html.Div([
-       # html.Img(
-           # src='data:image/png;base64,{}'.format(encoded_image2.decode()))], style={'textAlign': 'center'})
 
-image_filename3 = 'mudah.png' # replace with your own image
-encoded_image3 = base64.b64encode(open(image_filename3, 'rb').read())
+#image_filename3 = 'mudah.png' # replace with your own image
+#encoded_image3 = base64.b64encode(open(image_filename3, 'rb').read())
 
-mudah_img = html.A([
-            html.Img(
-                src='data:image/png;base64,{}'.format(encoded_image3.decode())
-            )
-    ], href='https://www.mudah.my/')
+#mudah_img = html.A([
+          #  html.Img(
+           #     src='data:image/png;base64,{}'.format(encoded_image3.decode())
+            #)
+    #], href='https://www.mudah.my/')
 
-#mudah_img =
- #   html.Img(src='data:image/png;base64,{}'.format(encoded_image3.decode()))
-
-#mudah_img = html.Div([
- #       html.Img(
-  #          src='data:image/png;base64,{}'.format(encoded_image3.decode()),
-   #         style={
-    #            'height': '5%',
-     #           'width': '10%'
-      #      })
-#])#, style={'textAlign': 'left'})
-
-colors = {
-    'text': '#d90404'
-}
+#colors = {
+    #'text': '#d90404'
+#}
 
 title = html.H1(children='Suspicious Ads Detector', style = {
     'textAlign': 'center',
@@ -450,11 +435,8 @@ str_id = dcc.Markdown(id='markdown_id', style = {'width': '97%',
                                     'background': 'Azure'                   
                                                          })
 
-#header_img = html.P([mudah_img, title_img, html.Hr()], style={'display' : 'inline-grid'})
-#header_img = html.P([mudah_img, title_img], style={'display' : 'inline'})
-
-
-header_img = html.P([ mudah_img, title_img], style={'display' : 'inline'} )
+#header_img = html.P([ mudah_img, title_img], style={'display' : 'inline'} )
+header_img = html.P([title_img], style={'display' : 'inline'} )
 
 tab_style = {
     #'borderBottom': '1px solid #d6d6d6',
