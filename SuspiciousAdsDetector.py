@@ -67,15 +67,6 @@ title_img = html.Img(src='data:image/png;base64,{}'.format(encoded_image2.decode
     #'text': '#d90404'
 #}
 
-title = html.H1(children='Suspicious Ads Detector', style = {
-    'textAlign': 'center',
-    'color': colors['text']
-})
-
-trademark = html.Div(children='Beware of SCAMMER, Buy from the Trusted ONE', style= {
-    'textAlign': 'center',
-    'color': colors['text']
-})
 
 markdown_text = ''' 
 __NAME__ : FATHIAH HUSNA BINTI FIRDAUS || __SUPERVISOR__ : DR. ALI SEMAN || July 2019 ||  [Video Tutorial](https://www.youtube.com/watch?v=zS2Xq7Mhyh8&feature=youtu.be)
